@@ -18,7 +18,7 @@ export default defineComponent({
   methods: {
     StartTime(){
       axios
-      .post("http://localhost:3000/time-log/start")
+      .post("")
       .then((response) => {
         console.log(response);
       })
