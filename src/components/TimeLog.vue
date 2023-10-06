@@ -11,35 +11,34 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import axios from "axios";
-import StopButton from "./StopButton.vue";
+import service from 'service/index'
 export default defineComponent({
-    name: "TimeLog",
-    data() {
-        return {
-            times: null,
-            timeID:Number,
-        };
+  name: "TimeLog",
+  data() {
+    return {
+      times: null,
+      timeID: Number,
+    };
+  },
+  methods: {
+    formatTime(timeStr: Date) {
+      const options = { hour: "numeric", minute: "numeric" };
+      return new Date(timeStr).toLocaleTimeString("en-US", options);
     },
-    component:{
-      StopButton,
-    },
-    mounted() {
-        axios
-            .get("http://localhost:3000/time-log")
-            .then((response) => {
-            console.log(response);
-            this.times = response.data;
-        })
-            .catch((error) => {
-            console.log(error);
-        });
-    },
-    methods: {
-        formatTime(timeStr:Date) {
-            const options = { hour: "numeric", minute: "numeric" };
-            return new Date(timeStr).toLocaleTimeString("en-US", options);
-        },
-    },
+  },
+  async fetchData() {
+    try {
+      const response = await service.timeLogControllerFindAll()
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  mounted: async function () {
+    console.log('mounted')
+    const response = await service.timeLogControllerFindAll()
+    console.log(response);
+  },
 });
 </script>
