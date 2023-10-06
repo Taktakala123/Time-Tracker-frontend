@@ -19,6 +19,8 @@
 
 <script setup lang="ts">
 import Date from './components/Date.vue';
+import StartButton from './components/StartButton.vue';
+import StopButton from './components/StopButton.vue';
 import TimeLog from './components/TimeLog.vue';
 </script>
 

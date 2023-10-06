@@ -1,44 +1,44 @@
 <template>
-  <div class="card">
+<div class="card">
     <div v-for="time in times" :key="time.id">
       Period {{ time.id }}
       {{ formatTime(time.StartTime) }} - {{ formatTime(time.EndTime) }}
       {{ time.duration }}
-      <StopButton :timeID="time.id" />
     </div>
+    <StopButton :timeID="time.id" />
   </div>
+  
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import service from 'service/index'
+import service from "../../service/index"
+import StopButton from "./StopButton.vue";
 export default defineComponent({
-  name: "TimeLog",
-  data() {
-    return {
-      times: null,
-      timeID: Number,
-    };
-  },
-  methods: {
-    formatTime(timeStr: Date) {
-      const options = { hour: "numeric", minute: "numeric" };
-      return new Date(timeStr).toLocaleTimeString("en-US", options);
+    name: "TimeLog",
+    data() {
+        return {
+            times: null,
+            timeID: Number,
+        };
     },
-  },
-  async fetchData() {
-    try {
-      const response = await service.timeLogControllerFindAll()
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  },
-
-  mounted: async function () {
-    console.log('mounted')
-    const response = await service.timeLogControllerFindAll()
-    console.log(response);
-  },
+    mounted: async function () {
+        console.log('mounted');
+        try {
+            const response = await service.timeLogControllerFindAll({ format: 'json' });
+            console.log(response);
+            this.times = response.data;
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
+    methods: {
+        formatTime(timeStr: Date) {
+            const options = { hour: "numeric", minute: "numeric" };
+            return new Date(timeStr).toLocaleTimeString("en-US", options);
+        },
+    },
+    components: { StopButton }
 });
 </script>
