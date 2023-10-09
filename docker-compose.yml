@@ -9,12 +9,15 @@ services:
       - "5173:5173"
     volumes:
       - ./client-ui:/app/
-  server-app:
+  app:
     build:
       context: ./server
       dockerfile: Dockerfile
     volumes:
-      - ./server/src:/app/src
+     - ./server/src:/app/src 
+     - ./server/prisma:/app/prisma 
+     - ./server/package.json:/app/package.json 
+     - ./server/package-lock.json:/app/package-lock.json
     ports:
       - 3000:3000 
     depends_on:
