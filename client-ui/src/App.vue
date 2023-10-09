@@ -18,7 +18,6 @@
          {{ formatTime(time.StartTime) }} - {{ formatTime(time.EndTime) }}
       </div>
    </div>
-
 </template>
 
 
@@ -35,14 +34,9 @@ export default defineComponent({
       StartButton,
       StopButton,
    },
-    data() {
+   data() {
       return {
-         times: {},
-         time: {
-            id: null,
-            StartTime: null,
-
-         },
+         times: null,
       };
    },
    mounted: async function () {
