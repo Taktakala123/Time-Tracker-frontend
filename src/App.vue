@@ -6,7 +6,7 @@
 
 <div class="flex justify-content-end flex-wrap">
  <div class="flex align-items-center justify-content-center m-2">
-    <StartButton/>
+    <StartButton :myEvent="()=>console.log('test')"/>
  </div>
  <div class="flex align-items-center justify-content-center m-2">
     <StopButton />

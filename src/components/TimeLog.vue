@@ -5,7 +5,6 @@
       {{ formatTime(time.StartTime) }} - {{ formatTime(time.EndTime) }}
       {{ time.duration }}
     </div>
-    <StopButton :timeID="time.id" />
   </div>
   
 </template>
@@ -23,7 +22,6 @@ export default defineComponent({
         };
     },
     mounted: async function () {
-        console.log('mounted');
         try {
             const response = await service.timeLogControllerFindAll({ format: 'json' });
             console.log(response);
