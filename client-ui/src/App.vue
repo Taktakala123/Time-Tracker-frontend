@@ -1,18 +1,16 @@
 <template>
-   <Timer/>
-</template>
-
-
-<script lang="ts">
-import { defineComponent } from 'vue';
-import Timer from './Views/Timer.vue'
-
-export default defineComponent({
+   <Timer />
+ </template>
+ 
+ <script lang="ts">
+ import { defineComponent } from 'vue';
+ import Timer from './Views/Timer.vue';
+ 
+ export default defineComponent({
    name: "App",
-   components:{
-      Timer,
+   components: {
+     Timer,
    },
-  
-
-});
-</script>
+ });
+ </script>
+ 

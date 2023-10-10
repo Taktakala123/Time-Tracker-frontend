@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, computed } from "vue";
 
 export default defineComponent({
   name: "Date",
@@ -18,7 +18,9 @@ export default defineComponent({
       return months[monthIndex];
     }
 
-    const formattedDate = `${currentDate.value.getDate()} ${getMonthName(currentDate.value.getMonth())}`;
+    const formattedDate = computed(() => {
+      return `${currentDate.value.getDate()} ${getMonthName(currentDate.value.getMonth())}`;
+    });
 
     return {
       formattedDate
@@ -26,5 +28,3 @@ export default defineComponent({
   }
 });
 </script>
-
-

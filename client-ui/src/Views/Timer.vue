@@ -5,17 +5,18 @@
 
     <div class="flex justify-content-end flex-wrap">
         <div class="flex align-items-center justify-content-center m-2">
-            <StartButton @StartTime="Addtime" />
+            <StopButton @StopTime="stop" />
         </div>
         <div class="flex align-items-center justify-content-center m-2">
-            <StopButton  @StopTime="stop"/>
+            <StartButton @StartTime="Addtime" />
         </div>
+
     </div>
 
     <div class="card">
         <div v-for="time in times" :key="time.id">
             Period {{ time.id }}
-            {{ time.StartTime }} - {{ time.EndTime }}
+            {{ time.duration }}
         </div>
     </div>
 </template>
@@ -47,7 +48,6 @@ export default defineComponent({
     mounted: async function () {
         try {
             this.response = await service.timeLogControllerFindAll({ format: 'json' });
-            console.log(this.response);
             this.times = this.response.data;
         }
         catch (error) {
@@ -76,8 +76,10 @@ export default defineComponent({
                 console.log(error);
             }
         },
-    },
 
+        
+        
+    },
 });
 </script>
  
