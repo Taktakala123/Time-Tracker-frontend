@@ -1,17 +1,21 @@
 <template>
-  <Button label="Stop" class="p-button-danger p-button-outlined" icon="pi pi-stop" @click="stopEvent" />
+  <Button label="Stop" class="p-button-danger p-button-outlined" icon="pi pi-stop" @click="stopEvent"
+    :disabled="enAttente" />
 </template> 
   
 <script lang="ts">
-import { defineComponent } from "vue";
+
+import { defineComponent, ref } from "vue";
 export default defineComponent({
   name: "StopButton",
   setup(props, { emit }) {
+    const enAttente = ref(false);
     function stopEvent() {
       emit('stopTime');
     }
 
     return {
+      enAttente,
       stopEvent
     };
   }

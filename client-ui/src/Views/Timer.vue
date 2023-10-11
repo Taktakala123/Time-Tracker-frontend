@@ -10,6 +10,9 @@
         <div class="flex align-items-center justify-content-center m-2">
             <StartButton @StartTime="Addtime" />
         </div>
+        <div class="flex align-items-center justify-content-center m-2">
+            {{ calculateTotalDuration() }}
+        </div>
 
     </div>
 
@@ -18,7 +21,13 @@
             Period {{ time.id }}
             {{ time.duration }}
         </div>
+        <div class="flex justify-content-end flex-wrap">
+            {{ calculateTotalDuration() }}
+        </div>
+
     </div>
+
+    
 </template>
  
  
@@ -42,7 +51,7 @@ export default defineComponent({
     const times = ref({});
     const response = ref({});
     const timeid = ref(null);
-    
+
     onMounted(async () => {
         try {
         response.value = await service.timeLogControllerFindAll({ format: 'json' });
@@ -76,12 +85,37 @@ export default defineComponent({
         console.log(error);
       }
     };
+    const calculateTotalDuration = () => {
+      let totalSeconds = 0;
 
+      for (const timeId in times.value) {
+        const duration = times.value[timeId].duration;
+
+        if (typeof duration === 'number') {
+          totalSeconds += duration;
+        } else if (typeof duration === 'string') {
+          const parts = duration.split(':');
+          if (parts.length === 3) {
+            const hours = parseInt(parts[0]);
+            const minutes = parseInt(parts[1]);
+            const seconds = parseInt(parts[2]);
+            totalSeconds += hours * 3600 + minutes * 60 + seconds;
+          }
+        }
+      }
+
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    };
 
     return {
       times,
       Addtime,
       stop,
+      calculateTotalDuration,
     };
   },
 });
