@@ -23,63 +23,67 @@
  
  
 <script lang="ts">
+import { defineComponent, ref, onMounted } from 'vue';
 import Date from '../components/Date.vue';
 import StartButton from '../components/StartButton.vue';
 import StopButton from '../components/StopButton.vue';
-import { defineComponent } from "vue";
-import service from "../../service/index"
+import service from '../../service/index';
+
 export default defineComponent({
-    name: "Timer",
+  name: 'Timer',
 
-    components: {
-        Date,
-        StartButton,
-        StopButton,
-    },
+  components: {
+    Date,
+    StartButton,
+    StopButton,
+  },
 
-    data() {
-        return {
-            times: {},
-            response: {},
-            timeid: Number,
-        };
-    },
-
-    mounted: async function () {
+  setup() {
+    const times = ref({});
+    const response = ref({});
+    const timeid = ref(null);
+    
+    onMounted(async () => {
         try {
-            this.response = await service.timeLogControllerFindAll({ format: 'json' });
-            this.times = this.response.data;
-        }
-        catch (error) {
-            console.log(error);
-        }
-    },
-    methods: {
-        async Addtime() {
-            try {
-                const Startdata = await service.start.timeLogControllerStartNewTimeLog({ format: 'json' })
-                this.times = [...this.response.data, Startdata.data];
-                this.timeid = Startdata.data.id
-                console.log(this.timeid)
-            }
-            catch (error) {
-                console.log(error);
-            }
-        },
-        async stop() {
-            try {
-                const Stopdata = await service.stop.timeLogControllerStopTimeLog(this.timeid, { format: 'json' })
-                console.log(Stopdata)
-                this.times = [...this.response.data, Stopdata.data];
-            }
-            catch (error) {
-                console.log(error);
-            }
-        },
+        response.value = await service.timeLogControllerFindAll({ format: 'json' });
+        times.value = response.value.data;
+      } catch (error) {
+        console.log(error);
+      }
+    })
 
-        
-        
-    },
+    const Addtime = async () => {
+      try {
+        const Startdata = await service.start.timeLogControllerStartNewTimeLog({ format: 'json' });
+        times.value = [...response.value.data, Startdata.data];
+        timeid.value = Startdata.data.id;
+        console.log(timeid.value);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const stop= async () => {
+      try {
+        if (timeid.value) {
+          const Stopdata = await service.stop.timeLogControllerStopTimeLog(timeid.value, { format: 'json' });
+          console.log(Stopdata);
+          times.value = [...response.value.data, Stopdata.data];
+        } else {
+          console.log('No active time log to stop.');
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+
+    return {
+      times,
+      Addtime,
+      stop,
+    };
+  },
 });
 </script>
  
