@@ -34,13 +34,13 @@
       </Card>
     </div>
 
-    <div class="flex align-items-center justify-content-end border-top-1 border-bottom-1 border-green-500   mt-6">
+    <div class="flex align-items-center justify-content-end border-top-1 border-bottom-1 border-green-400 mt-6 ">
 
-      <div class="flex align-items-center justify-content-center w-4rem h-4rem font-bold text-2xl m-4 ">
+      <div class="flex align-items-center w-4rem h-4rem font-bold text-2xl mr-4">
         <p> Total </p>
       </div>
 
-      <div class="flex align-items-center justify-content-center w-4rem h-4rem text-green-500 text-2xl  m-4">
+      <div class="flex align-items-center w-4rem h-4rem text-green-500 text-2xl mr-4">
         {{ formattedTime }}
       </div>
 
@@ -106,7 +106,7 @@ export default defineComponent({
       } catch (error) {
         console.log(error);
       }
-    };
+    }; 
 
     const seconds = ref(0);
 
