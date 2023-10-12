@@ -11,32 +11,22 @@
             <StartButton @StartTime="Addtime" />
         </div>
         <div class="flex align-items-center justify-content-center m-2">
-            {{ calculateTotalDuration() }}
+          {{ formattedTime }}
         </div>
 
     </div>
-
-    <div class="card">
-        <div v-for="time in times" :key="time.id">
-            Period {{ time.id }}
-            {{ time.duration }}
-        </div>
-        <div class="flex justify-content-end flex-wrap">
-            {{ calculateTotalDuration() }}
-        </div>
-
-    </div>
-
+    
     
 </template>
  
  
 <script lang="ts">
-import { defineComponent, ref, onMounted } from 'vue';
 import Date from '../components/Date.vue';
 import StartButton from '../components/StartButton.vue';
 import StopButton from '../components/StopButton.vue';
 import service from '../../service/index';
+import { ref, computed, onMounted, onBeforeUnmount,defineComponent } from "vue";
+
 
 export default defineComponent({
   name: 'Timer',
@@ -51,6 +41,8 @@ export default defineComponent({
     const times = ref({});
     const response = ref({});
     const timeid = ref(null);
+    let intervalId : any;
+
 
     onMounted(async () => {
         try {
@@ -67,6 +59,7 @@ export default defineComponent({
         times.value = [...response.value.data, Startdata.data];
         timeid.value = Startdata.data.id;
         console.log(timeid.value);
+        intervalId = setInterval(incrementCounter, 1000);
       } catch (error) {
         console.log(error);
       }
@@ -78,6 +71,7 @@ export default defineComponent({
           const Stopdata = await service.stop.timeLogControllerStopTimeLog(timeid.value, { format: 'json' });
           console.log(Stopdata);
           times.value = [...response.value.data, Stopdata.data];
+          clearInterval(intervalId);
         } else {
           console.log('No active time log to stop.');
         }
@@ -85,38 +79,32 @@ export default defineComponent({
         console.log(error);
       }
     };
-    const calculateTotalDuration = () => {
-      let totalSeconds = 0;
+   
+    const seconds = ref(0);
 
-      for (const timeId in times.value) {
-        const duration = times.value[timeId].duration;
+    // Fonction pour formater le temps en hh:mm:ss
+    const formattedTime = computed(() => {
+      const hours = String(Math.floor(seconds.value / 3600)).padStart(2, "0");
+      const minutes = String(Math.floor((seconds.value % 3600) / 60)).padStart(
+        2,
+        "0"
+      );
+      const secs = String(seconds.value % 60).padStart(2, "0");
+      return `${hours}:${minutes}:${secs}`;
+    });
 
-        if (typeof duration === 'number') {
-          totalSeconds += duration;
-        } else if (typeof duration === 'string') {
-          const parts = duration.split(':');
-          if (parts.length === 3) {
-            const hours = parseInt(parts[0]);
-            const minutes = parseInt(parts[1]);
-            const seconds = parseInt(parts[2]);
-            totalSeconds += hours * 3600 + minutes * 60 + seconds;
-          }
-        }
-      }
-
-      const hours = Math.floor(totalSeconds / 3600);
-      const minutes = Math.floor((totalSeconds % 3600) / 60);
-      const seconds = totalSeconds % 60;
-
-      return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    // Fonction pour incrémenter le compteur
+    const incrementCounter = () => {
+      seconds.value++;
     };
 
     return {
       times,
       Addtime,
       stop,
-      calculateTotalDuration,
+      formattedTime,
     };
+
   },
 });
 </script>
