@@ -1,26 +1,23 @@
 <template>
-    
-    <div class="flex justify-content-start flex-wrap">
-      <Date />
+  <div class="flex justify-content-start flex-wrap">
+    <Date />
+  </div>
+
+  <div class="flex justify-content-end flex-wrap">
+
+    <div class="flex align-items-center justify-content-center m-2">
+      <StopButton @StopTime="stop" />
     </div>
 
-    <div class="flex justify-content-end flex-wrap">
-
-      <div class="flex align-items-center justify-content-center m-2">
-        <StopButton @StopTime="stop" />
-      </div>
-
-      <div class="flex align-items-center justify-content-center m-2">
-        <StartButton @StartTime="Addtime" />
-      </div>
-
-      <div class="flex align-items-center justify-content-center text-2xl text-green-500">
-        {{ formattedTime }}
-      </div>
-
+    <div class="flex align-items-center justify-content-center m-2">
+      <StartButton @StartTime="Addtime" />
     </div>
 
+    <div class="flex align-items-center justify-content-center text-2xl text-green-500">
+      {{ formattedTime }}
+    </div>
 
+  </div>
 
   <div class="flex justify-content-end flex-wrap">
 
@@ -41,7 +38,7 @@ import Date from '../components/Date.vue';
 import StartButton from '../components/StartButton.vue';
 import StopButton from '../components/StopButton.vue';
 import service from '../../service/index';
-import { ref, computed, onMounted, onBeforeUnmount, defineComponent } from "vue";
+import { ref, computed, onMounted,defineComponent, onBeforeUnmount } from "vue";
 
 
 export default defineComponent({
@@ -68,13 +65,12 @@ export default defineComponent({
         console.log(error);
       }
     })
-
+    
     const Addtime = async () => {
       try {
         const Startdata = await service.start.timeLogControllerStartNewTimeLog({ format: 'json' });
         times.value = [...response.value.data, Startdata.data];
         timeid.value = Startdata.data.id;
-        console.log(timeid.value);
         intervalId = setInterval(incrementCounter, 1000);
       } catch (error) {
         console.log(error);
