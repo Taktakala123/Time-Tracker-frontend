@@ -1,34 +1,36 @@
 <template>
-  <div class="flex justify-content-start flex-wrap">
-    <Date />
-  </div>
+  <div class="flex flex-column">
+    <div class="flex justify-content-start flex-wrap align-content-center ">
 
-  <div class="flex justify-content-end flex-wrap">
+      <div class="align-items-center justify-content-center flex-wrap m-4">
+        <Date />
+      </div>
 
-    <div class="flex align-items-center justify-content-center m-2">
-      <StopButton @StopTime="stop" />
+      <div class="flex align-items-center justify-content-center m-2">
+        <StopButton @StopTime="stop" />
+      </div>
+
+      <div class="flex align-items-center justify-content-center m-2">
+        <StartButton @StartTime="Addtime" />
+      </div>
+
+      <div class="flex align-items-center justify-content-center text-2xl text-green-500">
+        {{ formattedTime }}
+      </div>
+
     </div>
 
-    <div class="flex align-items-center justify-content-center m-2">
-      <StartButton @StartTime="Addtime" />
+    <div class="flex align-items-center justify-content-end">
+
+      <div class="flex align-items-center justify-content-center w-4rem h-4rem font-bold text-2xl m-2 ">
+        <p> Total </p>
+      </div>
+
+      <div class="flex align-items-center justify-content-center w-4rem h-4rem text-green-500 text-2xl m-2">
+        {{ formattedTime }}
+      </div>
+
     </div>
-
-    <div class="flex align-items-center justify-content-center text-2xl text-green-500">
-      {{ formattedTime }}
-    </div>
-
-  </div>
-
-  <div class="flex justify-content-end flex-wrap">
-
-    <div class="flex align-items-center justify-content-center w-4rem h-4rem font-bold text-2xl m-2 ">
-      <p> Total </p>
-    </div>
-
-    <div class="flex align-items-center justify-content-center w-4rem h-4rem text-green-500 text-2xl m-2">
-      {{ formattedTime }}
-    </div>
-
   </div>
 </template>
  
@@ -38,7 +40,7 @@ import Date from '../components/Date.vue';
 import StartButton from '../components/StartButton.vue';
 import StopButton from '../components/StopButton.vue';
 import service from '../../service/index';
-import { ref, computed, onMounted,defineComponent, onBeforeUnmount } from "vue";
+import { ref, computed, onMounted, defineComponent, onBeforeUnmount } from "vue";
 
 
 export default defineComponent({
@@ -65,7 +67,7 @@ export default defineComponent({
         console.log(error);
       }
     })
-    
+
     const Addtime = async () => {
       try {
         const Startdata = await service.start.timeLogControllerStartNewTimeLog({ format: 'json' });
