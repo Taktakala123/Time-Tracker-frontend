@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-column">
-    <div class="flex justify-content-start flex-wrap align-content-center ">
+    <div class="flex flex-wrap align-content-center mb-6 ">
 
       <div class="align-items-center justify-content-center flex-wrap m-4">
         <Date />
@@ -19,14 +19,28 @@
       </div>
 
     </div>
+    <div v-for="time in times" :key="time.id" class="card border-green-500 border-top-1 border-bottom-1 ">
+      <Card>
+        <template #content>
+          <div class="flex align-items-center justify-content-between">
+            <div class="flex align-items-center justify-content-center  ">
+              Period {{ time.id }}
+            </div>
+            <div class="flex align-items-center justify-content-center  ">
+              {{ time.duration }}
+            </div>
+          </div>
+        </template>
+      </Card>
+    </div>
 
-    <div class="flex align-items-center justify-content-end">
+    <div class="flex align-items-center justify-content-end border-top-1 border-bottom-1 border-green-500   mt-6">
 
-      <div class="flex align-items-center justify-content-center w-4rem h-4rem font-bold text-2xl m-2 ">
+      <div class="flex align-items-center justify-content-center w-4rem h-4rem font-bold text-2xl m-4 ">
         <p> Total </p>
       </div>
 
-      <div class="flex align-items-center justify-content-center w-4rem h-4rem text-green-500 text-2xl m-2">
+      <div class="flex align-items-center justify-content-center w-4rem h-4rem text-green-500 text-2xl  m-4">
         {{ formattedTime }}
       </div>
 
@@ -40,7 +54,8 @@ import Date from '../components/Date.vue';
 import StartButton from '../components/StartButton.vue';
 import StopButton from '../components/StopButton.vue';
 import service from '../../service/index';
-import { ref, computed, onMounted, defineComponent, onBeforeUnmount } from "vue";
+import Card from 'primevue/card';
+import { ref, computed, onMounted, defineComponent, } from "vue";
 
 
 export default defineComponent({
@@ -50,6 +65,7 @@ export default defineComponent({
     Date,
     StartButton,
     StopButton,
+    Card,
   },
 
   setup() {
