@@ -13,9 +13,11 @@
         <div class="flex align-items-center justify-content-center m-2">
           {{ formattedTime }}
         </div>
-
     </div>
-    
+    <div class="flex justify-content-end flex-wrap">
+      Total : {{ formattedTime }}
+    </div>
+
     
 </template>
  
@@ -72,9 +74,7 @@ export default defineComponent({
           console.log(Stopdata);
           times.value = [...response.value.data, Stopdata.data];
           clearInterval(intervalId);
-        } else {
-          console.log('No active time log to stop.');
-        }
+        } 
       } catch (error) {
         console.log(error);
       }
