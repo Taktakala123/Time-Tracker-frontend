@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-column justify-content-center w-full h-full ">
-    <div class="flex flex-wrap mb-6 ">
+  <div class="flex flex-column max-h-full ">
+    <div class="flex">
 
       <div class="align-items-center justify-content-center flex-wrap m-4">
         <Date />
