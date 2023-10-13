@@ -7,7 +7,7 @@
       </div>
 
       <div class="flex align-items-center justify-content-center m-2">
-        <StopButton @StopTime="stop" />
+        <StopButton @StopTime="stop" :disabled=enAttente />
       </div>
 
       <div class="flex align-items-center justify-content-center m-2">
@@ -74,6 +74,7 @@ export default defineComponent({
   },
 
   setup() {
+    let enAttente = ref(false);
     const times = ref({});
     const response = ref({});
     const timeid = ref(null);
@@ -98,6 +99,7 @@ export default defineComponent({
         times.value.push(Startdata.data)
         console.log('addtime', times.value)
         timeid.value = Startdata.data.id;
+        enAttente.value=false;
       } catch (error) {
         console.log(error);
       }
@@ -106,6 +108,7 @@ export default defineComponent({
     const stop = async () => {
       try {
         if (timeid.value) {
+          enAttente.value = true;
           clearInterval(intervalId);
           const Stopdata = await service.stop.timeLogControllerStopTimeLog(timeid.value, { format: 'json' });
           const stopIndex = times.value.findIndex(item => item.id === timeid.value);
@@ -138,7 +141,7 @@ export default defineComponent({
       seconds.value++;
     };
 
-    const format = (inputDateString:Date) => {
+    const format = (inputDateString: Date) => {
       if (typeof inputDateString !== 'string') {
         return '';
       }
@@ -159,6 +162,7 @@ export default defineComponent({
     };
 
     return {
+      enAttente,
       times,
       Addtime,
       stop,
