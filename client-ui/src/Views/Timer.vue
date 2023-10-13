@@ -138,7 +138,7 @@ export default defineComponent({
       seconds.value++;
     };
 
-    const format = (inputDateString) => {
+    const format = (inputDateString:Date) => {
       if (typeof inputDateString !== 'string') {
         return '';
       }
