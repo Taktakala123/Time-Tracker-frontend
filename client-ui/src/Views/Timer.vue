@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-column justify-content-center  ">
+  <div class="flex flex-column justify-content-center w-full h-full ">
     <div class="flex flex-wrap mb-6 ">
 
       <div class="align-items-center justify-content-center flex-wrap m-4">
@@ -26,8 +26,13 @@
             <div class="flex align-items-center justify-content-center font-bold">
               Period {{ time.id }}
             </div>
-            <div class="flex align-items-center justify-content-center font-bold text-green-500 ">
-              {{ time.duration }}
+            <div>
+              <div class="flex align-items-center justify-content-center font-bold text-green-500 ">
+                {{ time.duration }}
+              </div>
+              <div>
+                {{ format(time.StartTime) }} - {{ format(time.EndTime) }}
+              </div>
             </div>
           </div>
         </template>
@@ -79,6 +84,8 @@ export default defineComponent({
       try {
         response.value = await service.timeLogControllerFindAll({ format: 'json' });
         times.value = response.value.data;
+        console.log('mounted', times.value)
+
       } catch (error) {
         console.log(error);
       }
@@ -88,7 +95,8 @@ export default defineComponent({
       try {
         intervalId = setInterval(incrementCounter, 1000);
         const Startdata = await service.start.timeLogControllerStartNewTimeLog({ format: 'json' });
-        times.value = [...response.value.data, Startdata.data];
+        times.value.push(Startdata.data)
+        console.log('addtime', times.value)
         timeid.value = Startdata.data.id;
       } catch (error) {
         console.log(error);
@@ -100,13 +108,17 @@ export default defineComponent({
         if (timeid.value) {
           clearInterval(intervalId);
           const Stopdata = await service.stop.timeLogControllerStopTimeLog(timeid.value, { format: 'json' });
-          console.log(Stopdata);
-          times.value = [...response.value.data, Stopdata.data];
+          const stopIndex = times.value.findIndex(item => item.id === timeid.value);
+          if (stopIndex !== -1) {
+            times.value.splice(stopIndex, 1, Stopdata.data);
+            console.log('Updated times after stopping:', times.value);
+          }
         }
       } catch (error) {
         console.log(error);
       }
-    }; 
+    };
+
 
     const seconds = ref(0);
 
@@ -126,11 +138,19 @@ export default defineComponent({
       seconds.value++;
     };
 
+    const format = (Str) => {
+      const dateParts = str.split('T')[1].split(':');
+      const hours = dateParts[0];
+      const minutes = dateParts[1];
+      return `${hours}:${minutes}`;
+    };
+
     return {
       times,
       Addtime,
       stop,
       formattedTime,
+      format,
     };
 
   },
