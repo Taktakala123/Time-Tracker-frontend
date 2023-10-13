@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-column ">
-    <div class="flex flex-wrap align-content-center mb-6 ">
+  <div class="flex flex-column justify-content-center  ">
+    <div class="flex flex-wrap mb-6 ">
 
       <div class="align-items-center justify-content-center flex-wrap m-4">
         <Date />
@@ -23,10 +23,10 @@
       <Card>
         <template #content>
           <div class="flex align-items-center justify-content-between">
-            <div class="flex align-items-center justify-content-center  ">
+            <div class="flex align-items-center justify-content-center font-bold">
               Period {{ time.id }}
             </div>
-            <div class="flex align-items-center justify-content-center  ">
+            <div class="flex align-items-center justify-content-center font-bold text-green-500 ">
               {{ time.duration }}
             </div>
           </div>
@@ -86,10 +86,10 @@ export default defineComponent({
 
     const Addtime = async () => {
       try {
+        intervalId = setInterval(incrementCounter, 1000);
         const Startdata = await service.start.timeLogControllerStartNewTimeLog({ format: 'json' });
         times.value = [...response.value.data, Startdata.data];
         timeid.value = Startdata.data.id;
-        intervalId = setInterval(incrementCounter, 1000);
       } catch (error) {
         console.log(error);
       }
@@ -98,10 +98,10 @@ export default defineComponent({
     const stop = async () => {
       try {
         if (timeid.value) {
+          clearInterval(intervalId);
           const Stopdata = await service.stop.timeLogControllerStopTimeLog(timeid.value, { format: 'json' });
           console.log(Stopdata);
           times.value = [...response.value.data, Stopdata.data];
-          clearInterval(intervalId);
         }
       } catch (error) {
         console.log(error);
