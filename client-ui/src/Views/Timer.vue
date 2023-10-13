@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-column max-h-full ">
+  <div class="flex flex-column justify-content-center max-h-full ">
     <div class="flex">
 
       <div class="align-items-center justify-content-center flex-wrap m-4">
@@ -99,7 +99,7 @@ export default defineComponent({
         times.value.push(Startdata.data)
         console.log('addtime', times.value)
         timeid.value = Startdata.data.id;
-        enAttente.value=false;
+        enAttente.value = false;
       } catch (error) {
         console.log(error);
       }
