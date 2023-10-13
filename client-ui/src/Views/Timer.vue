@@ -138,10 +138,23 @@ export default defineComponent({
       seconds.value++;
     };
 
-    const format = (Str) => {
-      const dateParts = str.split('T')[1].split(':');
-      const hours = dateParts[0];
-      const minutes = dateParts[1];
+    const format = (inputDateString) => {
+      if (typeof inputDateString !== 'string') {
+        return '';
+      }
+
+      const dateParts = inputDateString.split('T');
+      if (dateParts.length !== 2) {
+        return '';
+      }
+
+      const timeParts = dateParts[1].split(':');
+      if (timeParts.length < 2) {
+        return ' ';
+      }
+
+      const hours = timeParts[0];
+      const minutes = timeParts[1];
       return `${hours}:${minutes}`;
     };
 
