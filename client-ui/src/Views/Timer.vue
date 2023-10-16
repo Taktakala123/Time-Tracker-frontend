@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-column justify-content-center max-h-full mt-8">
     <div class="flex justify-content-between">
-      <div class="flex align-items-center justify-content-center flex-wrap ">
+      <div class="flex align-items-center justify-content-center font-bold flex-wrap ">
         <Date />
       </div>
       <div class="flex">
@@ -20,18 +20,18 @@
     </div>
 
     <div class="mt-8">
-      <Card v-for="time in times" :key="time.id" class="card border-green-500 border-top-1 border-bottom-1 ">
+      <Card v-for="time in times" :key="time.id" class="card border-green-500 border-top-1 border-bottom-1">
         <template #content>
           <div class="flex align-items-center justify-content-between ">
             <div class="flex align-items-center justify-content-center font-bold">
               Period {{ time.id }}
             </div>
-            <div>
-              <div class="flex align-items-center justify-content-center font-bold text-green-500 ">
-                {{ time.duration }}
-              </div>
-              <div>
+            <div class="flex">
+              <div class="flex align-items-center justify-content-center m-2">
                 {{ format(time.StartTime) }} - {{ format(time.EndTime) }}
+              </div>
+              <div class="flex align-items-center justify-content-center text-green-500 text-2xl m-2 ">
+                {{ time.duration }}
               </div>
             </div>
           </div>
