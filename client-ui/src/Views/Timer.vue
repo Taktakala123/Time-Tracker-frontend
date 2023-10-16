@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-column justify-content-center max-h-full mt-8">
+  <div class="flex flex-column max-h-full mt-8">
     <div class="flex justify-content-between">
       <div class="flex align-items-center justify-content-center font-bold text-blue-900">
         <Date />
@@ -20,7 +20,7 @@
     </div>
 
     <div class="mt-8">
-      <Card v-for="time in times" :key="time.id" class="card border-green-500 border-top-1 border-bottom-1">
+      <Card v-for="time in times" :key="time.id" class="border-green-500 border-top-1 border-bottom-1">
         <template #content>
           <div class="flex align-items-center justify-content-between ">
             <div class="flex align-items-center justify-content-center font-bold">
