@@ -1,23 +1,22 @@
 <template>
   <div class="flex flex-column justify-content-center max-h-full ">
-    <div class="flex">
-
-      <div class="align-items-center justify-content-center flex-wrap m-4">
+    <div class="flex justify-content-between">
+      <div class="align-items-center justify-content-center flex-wrap ">
         <Date />
       </div>
+      <div class="flex">
+        <div class="flex align-items-center justify-content-center m-2">
+          <StopButton @StopTime="stop" :disabled=enAttente />
+        </div>
 
-      <div class="flex align-items-center justify-content-center m-2">
-        <StopButton @StopTime="stop" :disabled=enAttente />
+        <div class="flex align-items-center justify-content-center m-2 ">
+          <StartButton @StartTime="Addtime" :disabled=Activated />
+        </div>
+
+        <div class="flex align-items-center justify-content-center text-2xl text-green-500 m-4">
+          {{ formattedTime }}
+        </div>
       </div>
-
-      <div class="flex align-items-center justify-content-center m-2">
-        <StartButton @StartTime="Addtime" />
-      </div>
-
-      <div class="flex align-items-center justify-content-center text-2xl text-green-500">
-        {{ formattedTime }}
-      </div>
-
     </div>
     <div v-for="time in times" :key="time.id" class="card border-green-500 border-top-1 border-bottom-1 ">
       <Card>
@@ -75,6 +74,7 @@ export default defineComponent({
 
   setup() {
     let enAttente = ref(false);
+    let Activated = ref(false);
     const times = ref({});
     const response = ref({});
     const timeid = ref(null);
@@ -95,6 +95,7 @@ export default defineComponent({
     const Addtime = async () => {
       try {
         intervalId = setInterval(incrementCounter, 1000);
+        Activated.value = true;
         const Startdata = await service.start.timeLogControllerStartNewTimeLog({ format: 'json' });
         times.value.push(Startdata.data)
         console.log('addtime', times.value)
@@ -109,6 +110,7 @@ export default defineComponent({
       try {
         if (timeid.value) {
           enAttente.value = true;
+          Activated.value = false;
           clearInterval(intervalId);
           const Stopdata = await service.stop.timeLogControllerStopTimeLog(timeid.value, { format: 'json' });
           const stopIndex = times.value.findIndex(item => item.id === timeid.value);
@@ -163,6 +165,7 @@ export default defineComponent({
 
     return {
       enAttente,
+      Activated,
       times,
       Addtime,
       stop,
