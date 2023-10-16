@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-column justify-content-center max-h-full ">
+  <div class="flex flex-column justify-content-center max-h-full mt-8">
     <div class="flex justify-content-between">
-      <div class="align-items-center justify-content-center flex-wrap ">
+      <div class="flex align-items-center justify-content-center flex-wrap ">
         <Date />
       </div>
       <div class="flex">
@@ -18,10 +18,11 @@
         </div>
       </div>
     </div>
-    <div v-for="time in times" :key="time.id" class="card border-green-500 border-top-1 border-bottom-1 ">
-      <Card>
+
+    <div class="mt-8">
+      <Card v-for="time in times" :key="time.id" class="card border-green-500 border-top-1 border-bottom-1 ">
         <template #content>
-          <div class="flex align-items-center justify-content-between">
+          <div class="flex align-items-center justify-content-between ">
             <div class="flex align-items-center justify-content-center font-bold">
               Period {{ time.id }}
             </div>
@@ -38,7 +39,7 @@
       </Card>
     </div>
 
-    <div class="flex align-items-center justify-content-end border-top-1 border-bottom-1 border-green-400 mt-6 ">
+    <div class="flex align-items-center justify-content-end border-top-1 border-bottom-1 border-green-400 mt-8 ">
 
       <div class="flex align-items-center w-4rem h-4rem font-bold text-2xl mr-4">
         <p> Total </p>
