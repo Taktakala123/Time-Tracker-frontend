@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-column justify-content-center max-h-full mt-8">
     <div class="flex justify-content-between">
-      <div class="flex align-items-center justify-content-center font-bold flex-wrap ">
+      <div class="flex align-items-center justify-content-center font-bold text-blue-900">
         <Date />
       </div>
       <div class="flex">
@@ -27,7 +27,7 @@
               Period {{ time.id }}
             </div>
             <div class="flex">
-              <div class="flex align-items-center justify-content-center m-2">
+              <div class="flex align-items-center justify-content-center font-bold m-2">
                 {{ format(time.StartTime) }} - {{ format(time.EndTime) }}
               </div>
               <div class="flex align-items-center justify-content-center text-green-500 text-2xl m-2 ">
@@ -41,7 +41,7 @@
 
     <div class="flex align-items-center justify-content-end border-top-1 border-bottom-1 border-green-400 mt-8 ">
 
-      <div class="flex align-items-center w-4rem h-4rem font-bold text-2xl mr-4">
+      <div class="flex align-items-center w-4rem h-4rem font-bold text-2xl text-blue-900 mr-4">
         <p> Total </p>
       </div>
 
