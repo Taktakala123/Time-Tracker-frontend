@@ -2,6 +2,7 @@ version: "3.9"
 
 services:
   dev:
+    profiles: ["dev"]
     build:
       context: ./client-ui
       dockerfile: Dockerfile
@@ -9,7 +10,19 @@ services:
       - "5173:5173"
     volumes:
       - ./client-ui:/app/
+      
+  dev-prod:
+    profiles: ["prod"]
+    build:
+      context: ./client-ui
+      dockerfile: Dockerfile.prod
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client-ui:/app/
+
   app:
+    profiles: ["dev"]
     build:
       context: ./server
       dockerfile: Dockerfile
@@ -24,7 +37,26 @@ services:
       - db
     environment:
       DATABASE_URL: postgres://root:password@db:5432/TimeTracker 
+
+  app-prod:
+    profiles: ["prod"]
+    build:
+      context: ./server
+      dockerfile: Dockerfile.prod
+    volumes:
+     - ./server/src:/app/src 
+     - ./server/prisma:/app/prisma 
+     - ./server/package.json:/app/package.json 
+     - ./server/package-lock.json:/app/package-lock.json
+    ports:
+      - 3000:3000 
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://root:password@db:5432/TimeTracker 
+
   db:
+    profiles: ["dev","prod"]
     image: postgres:12
     environment:
       POSTGRES_USER: root  
@@ -33,11 +65,21 @@ services:
     ports:
       - '5432:5432' 
     expose:
-      - '5432'  
+      - '5432'
+
   pgadmin:
+    profiles: ["dev","prod"]
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@example.com  
       PGADMIN_DEFAULT_PASSWORD: admin
     ports:
-      - '8080:80'      
+      - '8080:80'          
+  
+    
+
+
+    
+
+
+ 

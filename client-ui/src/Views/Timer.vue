@@ -79,15 +79,13 @@ export default defineComponent({
     const times = ref({});
     const response = ref({});
     const timeid = ref(null);
-    let intervalId: any;
+    let intervalId: number;
 
 
     onMounted(async () => {
       try {
         response.value = await service.timeLogControllerFindAll({ format: 'json' });
         times.value = response.value.data;
-        console.log('mounted', times.value)
-
       } catch (error) {
         console.log(error);
       }
