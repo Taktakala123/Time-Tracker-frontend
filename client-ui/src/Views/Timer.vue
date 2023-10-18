@@ -112,7 +112,7 @@ export default defineComponent({
           Activated.value = false;
           clearInterval(intervalId);
           const Stopdata = await service.stop.timeLogControllerStopTimeLog(timeid.value, { format: 'json' });
-          const stopIndex = times.value.findIndex(item => item.id === timeid.value);
+          const stopIndex = times.value.findIndex((item:any) => item.id === timeid.value);
           if (stopIndex !== -1) {
             times.value.splice(stopIndex, 1, Stopdata.data);
             console.log('Updated times after stopping:', times.value);
