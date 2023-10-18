@@ -60,7 +60,7 @@ import StartButton from '../components/StartButton.vue';
 import StopButton from '../components/StopButton.vue';
 import service from '../../service/index';
 import Card from 'primevue/card';
-import { ref, computed, onMounted, defineComponent, } from "vue";
+import { ref, computed, onMounted, defineComponent} from "vue";
 
 
 export default defineComponent({
@@ -76,14 +76,14 @@ export default defineComponent({
   setup() {
     let enAttente = ref(false);
     let Activated = ref(false);
-    const times = ref({});
-    const response = ref({});
+    const times = <any>ref({});
     const timeid = ref(null);
     let intervalId: number;
 
 
     onMounted(async () => {
       try {
+        const response = <any>ref({});
         response.value = await service.timeLogControllerFindAll({ format: 'json' });
         times.value = response.value.data;
       } catch (error) {
