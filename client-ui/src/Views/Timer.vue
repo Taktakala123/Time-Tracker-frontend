@@ -60,7 +60,7 @@ import StartButton from '../components/StartButton.vue';
 import StopButton from '../components/StopButton.vue';
 import service from '../../service/index';
 import Card from 'primevue/card';
-import { ref, computed, onMounted, defineComponent} from "vue";
+import { ref, computed, onMounted, defineComponent } from "vue";
 
 
 export default defineComponent({
@@ -73,11 +73,13 @@ export default defineComponent({
     Card,
   },
 
+
+
   setup() {
     let enAttente = ref(false);
     let Activated = ref(false);
+    let timeid = ref();
     const times = <any>ref({});
-    const timeid = ref(null);
     let intervalId: number;
 
 
@@ -95,9 +97,10 @@ export default defineComponent({
       try {
         intervalId = setInterval(incrementCounter, 1000);
         Activated.value = true;
-        const Startdata = await service.start.timeLogControllerStartNewTimeLog({ format: 'json' });
+        const Startdata : any = await service.start.timeLogControllerStartNewTimeLog({ format: 'json' });
         times.value.push(Startdata.data)
-        console.log('addtime', times.value)
+        // console.log('addtime', times.value)
+        console.log('addtime',Startdata )
         timeid.value = Startdata.data.id;
         enAttente.value = false;
       } catch (error) {
@@ -112,10 +115,10 @@ export default defineComponent({
           Activated.value = false;
           clearInterval(intervalId);
           const Stopdata = await service.stop.timeLogControllerStopTimeLog(timeid.value, { format: 'json' });
-          const stopIndex = times.value.findIndex((item:any) => item.id === timeid.value);
+          console.log(Stopdata)
+          const stopIndex = times.value.findIndex((item: any) => item.id === timeid.value);
           if (stopIndex !== -1) {
             times.value.splice(stopIndex, 1, Stopdata.data);
-            console.log('Updated times after stopping:', times.value);
           }
         }
       } catch (error) {
