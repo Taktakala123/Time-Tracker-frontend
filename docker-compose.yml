@@ -1,7 +1,7 @@
 version: "3.9"
 
 services:
-  dev:
+  clent-ui:
     profiles: ["dev"]
     build:
       context: ./client-ui
@@ -11,7 +11,7 @@ services:
     volumes:
       - ./client-ui:/app/
       
-  dev-prod:
+  client-ui-prod:
     profiles: ["prod"]
     build:
       context: ./client-ui
@@ -21,7 +21,7 @@ services:
     volumes:
       - ./client-ui:/app/
 
-  app:
+  server:
     profiles: ["dev"]
     build:
       context: ./server
@@ -38,7 +38,7 @@ services:
     environment:
       DATABASE_URL: postgres://root:password@db:5432/TimeTracker 
 
-  app-prod:
+  server-prod:
     profiles: ["prod"]
     build:
       context: ./server
