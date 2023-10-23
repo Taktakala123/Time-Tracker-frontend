@@ -62,7 +62,6 @@ import service from '../../service/index';
 import Card from 'primevue/card';
 import { ref, computed, onMounted, defineComponent } from "vue";
 
-
 export default defineComponent({
   name: 'Timer',
 
@@ -97,10 +96,10 @@ export default defineComponent({
       try {
         intervalId = setInterval(incrementCounter, 1000);
         Activated.value = true;
-        const Startdata : any = await service.start.timeLogControllerStartNewTimeLog({ format: 'json' });
+        const Startdata: any = await service.start.timeLogControllerStartNewTimeLog({ format: 'json' });
         times.value.push(Startdata.data)
         // console.log('addtime', times.value)
-        console.log('addtime',Startdata )
+        console.log('addtime', Startdata)
         timeid.value = Startdata.data.id;
         enAttente.value = false;
       } catch (error) {
