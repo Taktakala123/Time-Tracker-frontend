@@ -1,0 +1,72 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "TimeLogController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Get all time logs"
+          }
+        },
+        "tags": [
+          "Time Triker"
+        ]
+      }
+    },
+    "/start": {
+      "post": {
+        "operationId": "TimeLogController_startNewTimeLog",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Start a new time log"
+          }
+        },
+        "tags": [
+          "Time Triker"
+        ]
+      }
+    },
+    "/stop/{id}": {
+      "put": {
+        "operationId": "TimeLogController_stopTimeLog",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Time log ID",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Stop a time log by ID"
+          }
+        },
+        "tags": [
+          "Time Triker"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Time Tracker",
+    "description": "Time Tracker API description",
+    "version": "1.0",
+    "contact": {
+
+    }
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+
+    }
+  }
+}
