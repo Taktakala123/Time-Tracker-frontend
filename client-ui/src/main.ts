@@ -11,10 +11,12 @@ import "primeicons/primeicons.css"; //icons
 import 'primeflex/primeflex.css';
 
 import Button from 'primevue/button';
+import router from './router';
 
 
 
 const app = createApp(App);
+app.use(router)
 app.use(PrimeVue)
 app.component("Button", Button)
 app.mount('#app');
