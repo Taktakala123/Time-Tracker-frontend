@@ -1,20 +1,13 @@
 <template>
-  <Button label="Stop" class="p-button-danger p-button-outlined" icon="pi pi-stop" @click="stopEvent"/>
+  <Button label="Stop" class="p-button-danger p-button-outlined" icon="pi pi-stop" @click="stopEvent" />
 </template> 
   
-<script lang="ts">
+<script setup lang="ts">
+import { defineEmits } from "vue";
+const emit = defineEmits(['stopTime']);
 
-import { defineComponent, ref } from "vue";
-export default defineComponent({
-  name: "StopButton",
-  setup(props, { emit }) {
-    function stopEvent() {
-      emit('stopTime');
-    }
+function stopEvent() {
+  emit('stopTime');
+}
 
-    return {
-      stopEvent
-    };
-  }
-});
 </script>

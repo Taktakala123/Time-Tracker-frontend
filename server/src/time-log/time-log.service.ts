@@ -13,7 +13,7 @@ export class TimeLogService {
     async startNew() {
         const createdTimeLog = await this.prisma.timeLog.create({
             data: {
-                StartTime: new Date(),
+                startTime: new Date(),
             },
             
         });
@@ -27,7 +27,7 @@ export class TimeLogService {
         });
     
         const endTime = new Date();
-        const startTime = existingTimeLog.StartTime; // Assuming StartTime is a property of the model instance
+        const startTime = existingTimeLog.startTime; // Assuming StartTime is a property of the model instance
         const durationMillis = endTime.getTime() - startTime.getTime(); // Difference in milliseconds
     
         // Convert milliseconds to hh:mm:ss format
@@ -39,7 +39,7 @@ export class TimeLogService {
         await this.prisma.timeLog.update({
             where: { id: Number(id) },
             data: {
-                EndTime: endTime,
+                endTime: endTime,
                 duration: formattedDuration,
             },
         });

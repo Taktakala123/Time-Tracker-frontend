@@ -1,7 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router";
-import Timer from "../Views/Timer.vue";
-import Repports from "../Views/Repports.vue";
-
+import Timer from "../views/Timer.vue";
+import Repports from "../views/Repports.vue";
 
 const routes = [
   {

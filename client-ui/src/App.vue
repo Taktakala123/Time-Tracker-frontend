@@ -1,19 +1,13 @@
 <template>
-    <router-view />
+  <router-view />
 </template>
  
-<script lang="ts">
-import { defineComponent } from 'vue';
-import Timer from './Views/Timer.vue';
-import Repports from './Views/Repports.vue';
-
-export default defineComponent({
-  name: "App",
-  components: {
-    Timer,
-    Repports,
-    
-  },
-});
+<script setup lang="ts" >
+import Timer from './views/Timer.vue';
+import Repports from './views/Repports.vue';
+components:{ 
+  Timer
+  Repports
+}
 </script>
  

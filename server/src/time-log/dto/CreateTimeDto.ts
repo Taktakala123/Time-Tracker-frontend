@@ -6,10 +6,10 @@ export class CreateTimeDto {
   id: Number;
 
   @ApiProperty({ required: true })
-  StartTime: Date;
+  startTime: Date;
 
   @ApiProperty({ required: false })
-  EndTime?: Date;
+  endTime?: Date;
 
   @ApiProperty({ required: false })
   duration?: string;

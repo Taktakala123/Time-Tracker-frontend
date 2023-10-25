@@ -12,7 +12,7 @@ datasource db {
 
 model TimeLog {
   id        Int       @id @default(autoincrement())
-  StartTime DateTime  @default(now())
-  EndTime   DateTime?
+  startTime DateTime  
+  endTime   DateTime?
   duration  String?
 }
