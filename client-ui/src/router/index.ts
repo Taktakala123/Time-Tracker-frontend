@@ -1,12 +1,19 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Timer from "../views/Timer.vue";
 import Repports from "../views/Repports.vue";
+import Login from "../views/Login.vue";
+
 
 const routes = [
   {
+    path: "/login",
+    name: "Login",
+    component: Login,
+  },
+  {
     path: "/",
     name: "Timer",
-    component: Timer  ,
+    component: Timer,
   },
   {
     path: "/Repports",
