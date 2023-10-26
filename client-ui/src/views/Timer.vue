@@ -10,7 +10,7 @@
         </div>
 
         <div class="flex align-items-center justify-content-center m-2 ">
-          <StartButton @StartTime="Addtime" :disabled=activated />
+          <StartButton @StartTime="addTime" :disabled=activated />
         </div>
 
         <div class="flex align-items-center justify-content-center text-2xl text-green-500 m-4">
@@ -58,10 +58,9 @@
 import Date from '../components/Date.vue';
 import StartButton from '../components/StartButton.vue';
 import StopButton from '../components/StopButton.vue';
-import service from '../../service/index';
 import Card from 'primevue/card';
 import { ref, computed, onMounted } from "vue";
-
+import { useTime } from '../store/useTime';
 
 components: {
   Date
@@ -70,33 +69,23 @@ components: {
   Card
 }
 
-
+const time =  useTime();
+const times = <any>ref([]);
 const enattente = ref(false);
 const activated = ref(false);
-const timeid = ref();
-const times = <any>ref({});
 let intervalid: number;
 
 
-onMounted(async () => {
-  try {
-    const response = <any>ref({});
-    response.value = await service.timeLogControllerFindAll({ format: 'json' });
-    times.value = response.value.data;
-  } catch (error) {
-    console.log(error);
-  }
+onMounted(async() => {
+  await time.findall()
+  times.value = time.times;
 })
 
-const Addtime = async () => {
+const addTime = async () => {
   try {
     intervalid = setInterval(incrementCounter, 1000);
     activated.value = true;
-    const Startdata: any = await service.start.timeLogControllerStartNewTimeLog({ format: 'json' });
-    times.value.push(Startdata.data)
-    // console.log('addtime', times.value)
-    console.log('addtime', Startdata)
-    timeid.value = Startdata.data.id;
+    time.addTime();
     enattente.value = false;
   } catch (error) {
     console.log(error);
@@ -105,22 +94,14 @@ const Addtime = async () => {
 
 const stop = async () => {
   try {
-    if (timeid.value) {
       enattente.value = true;
       activated.value = false;
       clearInterval(intervalid);
-      const Stopdata = await service.stop.timeLogControllerStopTimeLog(timeid.value, { format: 'json' });
-      console.log(Stopdata)
-      const stopIndex = times.value.findIndex((item: any) => item.id === timeid.value);
-      if (stopIndex !== -1) {
-        times.value.splice(stopIndex, 1, Stopdata.data);
-      }
-    }
+      time.stop();
   } catch (error) {
     console.log(error);
   }
 };
-
 
 const seconds = ref(0);
 
