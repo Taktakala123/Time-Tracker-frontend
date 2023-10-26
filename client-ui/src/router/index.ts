@@ -6,12 +6,12 @@ import Login from "../views/Login.vue";
 
 const routes = [
   {
-    path: "/login",
-    name: "Login",
+    path: "/",
+    name: "login",
     component: Login,
   },
   {
-    path: "/",
+    path: "/timer",
     name: "Timer",
     component: Timer,
   },

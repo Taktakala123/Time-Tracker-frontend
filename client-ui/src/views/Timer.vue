@@ -69,14 +69,14 @@ components: {
   Card
 }
 
-const time =  useTime();
-const times = <any>ref([]);
+const time = useTime();
+const times = ref([]);
 const enattente = ref(false);
 const activated = ref(false);
 let intervalid: number;
 
 
-onMounted(async() => {
+onMounted(async () => {
   await time.findall()
   times.value = time.times;
 })
@@ -94,10 +94,10 @@ const addTime = async () => {
 
 const stop = async () => {
   try {
-      enattente.value = true;
-      activated.value = false;
-      clearInterval(intervalid);
-      time.stop();
+    enattente.value = true;
+    activated.value = false;
+    clearInterval(intervalid);
+    time.stop();
   } catch (error) {
     console.log(error);
   }
