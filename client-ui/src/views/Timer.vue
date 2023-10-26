@@ -70,7 +70,7 @@ components: {
 }
 
 const time = useTime();
-const times = ref([]);
+const times =<any> ref([]);
 const enattente = ref(false);
 const activated = ref(false);
 let intervalid: number;
