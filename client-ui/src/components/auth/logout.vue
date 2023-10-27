@@ -10,6 +10,6 @@ import { useRouter } from 'vue-router';
 const router = useRouter()
 const logout = async () => {
     let { error } = await supabase.auth.signOut()
-    router.push('/')
+    router.push('/auth/login')
 }
 </script>

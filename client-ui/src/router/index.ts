@@ -1,11 +1,8 @@
 import { createWebHashHistory, createRouter } from "vue-router";
 import Timer from "../views/Timer.vue";
 import login from "../views/login.vue";
+import Dashbord from "../views/Dashbord.vue";
 import AppLayout from '../layout/AppLayout.vue';
-
-
-
-  
 
 
 const router = createRouter({
@@ -18,7 +15,7 @@ const router = createRouter({
                 {
                     path: '/',
                     name: 'dashboard',
-                    component: () => import('../views/Dashbord.vue')
+                    component: Dashbord
                 },
                 {
                     path: '/timer',
@@ -27,6 +24,11 @@ const router = createRouter({
                 },
             ]
         },
+        {
+            path: '/auth/login',
+            name: 'login',
+            component: login
+        }
     ]
 });
 
