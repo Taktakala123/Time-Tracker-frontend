@@ -1,4 +1,5 @@
 import './assets/main.css'
+import '@/assets/styles.scss';
 
 import { createApp } from 'vue'
 import App from './App.vue' 
@@ -11,6 +12,8 @@ import "primeicons/primeicons.css"; //icons
 import 'primeflex/primeflex.css';
 
 import Button from 'primevue/button';
+import InputText from 'primevue/inputtext';
+
 import router from './router';
 import { createPinia } from 'pinia'
 
@@ -21,4 +24,5 @@ app.use(router)
 app.use(pinia)
 app.use(PrimeVue)
 app.component("Button", Button)
+app.component("InputText", InputText)
 app.mount('#app');
