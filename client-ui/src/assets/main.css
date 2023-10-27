@@ -1,8 +1,8 @@
 @import './base.css';
 
 #app {
-  max-width: 896px;
-  max-height: 529px;
+  max-width: 1300px;
+  max-height: 700px;
   margin: 0 auto;
   padding: 2rem;
 
