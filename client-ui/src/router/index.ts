@@ -3,10 +3,7 @@ import Timer from "../views/Timer.vue";
 import Dashbord from "../views/Dashbord.vue";
 import AppLayout from '../layout/AppLayout.vue';
 import { storeToRefs } from "pinia";
-import { useAuth } from "../store/useAuth";
-
-
-
+import { useAuthStore } from "../store/useAuth";
 
 
 const router = createRouter({
@@ -21,7 +18,7 @@ const router = createRouter({
                     name: 'dashboard',
                     component: Dashbord
                 },
-                {
+                { 
                     path: '/timer',
                     name: 'dashboard',
                     component: Timer
@@ -65,10 +62,10 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
     const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
     const authRoute = to.matched.some((record) => record.meta.auth);
-    const store = useAuth();
+    const store = useAuthStore();
 
-    const { currentUser, isLoggedIn } = storeToRefs(useAuth());
-    currentUser.value ? undefined : await store.getCurrent();
+    const { currentUser, isLoggedIn } = storeToRefs(useAuthStore());
+    // currentUser.value ? undefined : await store.getCurrent();
 
     if (isLoggedIn.value && authRoute && !to.fullPath.includes("type=recovery")) {
         next({ name: "dashboard" });
