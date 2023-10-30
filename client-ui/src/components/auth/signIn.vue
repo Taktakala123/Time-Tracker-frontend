@@ -5,36 +5,27 @@
             <InputText id="Email" class="inputField" required type="email" v-model="email" />
             <label for="Password">Password</label>
             <Password id="Password" :feedback="false" required type="password" v-model="password" toggleMask />
-            <Button type="submit" label="signup" class="button block" />
+            <Button type="submit" label="Sign In" class="button block" />
         </div>
     </form>
 </template>
 
 <script setup lang="ts">
+import { useAuthStore } from '@/store/useAuth';
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
-import supabase from '../../supabase.js'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router';
 
-const loading = ref(false)
 const email = ref('')
 const password = ref('')
-const router = useRouter()
-
+const Auth = useAuthStore();
 
 const signIn = async () => {
     try {
-        let { data, error } = await supabase.auth.signInWithPassword({
-            email: email.value,
-            password: password.value,
-        })
-        if (error) throw error
+        let { data, error } = Auth.signIn(email.value, password.value)
     } catch (error) {
         console.log(error)
-    } finally {
-        router.push('/timer')
-        loading.value = false
     }
 }
 </script>

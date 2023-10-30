@@ -64,8 +64,6 @@ import StopButton from '../components/StopButton.vue';
 import Card from 'primevue/card';
 import { ref, computed, onMounted } from "vue";
 import { useTime } from '../store/useTime';
-import logout from '@/components/auth/logout.vue';
-import router from '@/router';
 
 components: {
   Date
