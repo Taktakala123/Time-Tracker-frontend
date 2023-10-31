@@ -14,23 +14,20 @@
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import { ref } from 'vue'
-import { useRouter } from 'vue-router';
 import { useAuthStore } from "@/store/useAuth";
 
 
 
 const email = ref('')
 const password = ref('')
-const router = useRouter()
-const Auth =useAuthStore();
+const Auth = useAuthStore();
 
 
 const signup = async () => {
     try {
-        const { data, error } = Auth.signup(email.value,password.value)
-        if (error) throw error
+        await Auth.signup(email.value, password.value)
     } catch (error) {
         console.log(error)
-    } 
+    }
 }
 </script>

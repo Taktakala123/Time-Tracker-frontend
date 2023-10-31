@@ -11,11 +11,11 @@
 </template>
 
 <script setup lang="ts">
+import router from '@/router';
 import { useAuthStore } from '@/store/useAuth';
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
-import { ref } from 'vue'
-import { useRouter } from 'vue-router';
+import {ref} from 'vue'
 
 const email = ref('')
 const password = ref('')
@@ -23,7 +23,8 @@ const Auth = useAuthStore();
 
 const signIn = async () => {
     try {
-        let { data, error } = Auth.signIn(email.value, password.value)
+       await Auth.signIn(email.value, password.value)
+       router.push('/')
     } catch (error) {
         console.log(error)
     }

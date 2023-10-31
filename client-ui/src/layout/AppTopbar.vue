@@ -2,7 +2,9 @@
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useLayout } from '../layout/composables/layout';
 import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/store/useAuth';
 
+const Auth = useAuthStore();
 const { layoutConfig, onMenuToggle } = useLayout();
 
 const outsideClickListener = ref(null);
@@ -12,6 +14,11 @@ const router = useRouter();
 onMounted(() => {
     bindOutsideClickListener();
 });
+
+const logout = () => {
+    Auth.logout();
+    router.push('/auth/sign-in')
+};
 
 onBeforeUnmount(() => {
     unbindOutsideClickListener();
@@ -72,6 +79,7 @@ const isOutsideClicked = (event) => {
         </button>
 
         <div class="layout-topbar-menu" :class="topbarMenuClasses">
+            
             <button @click="onTopBarMenuButton()" class="p-link layout-topbar-button">
                 <i class="pi pi-calendar"></i>
                 <span>Calendar</span>
@@ -79,6 +87,10 @@ const isOutsideClicked = (event) => {
             <button @click="onTopBarMenuButton()" class="p-link layout-topbar-button">
                 <i class="pi pi-user"></i>
                 <span>Profile</span>
+            </button>
+            <button @click="logout" class="p-link layout-topbar-button">
+                <i class="pi pi-sign-out"></i>
+                <span>logout</span>
             </button>
         </div>
     </div>

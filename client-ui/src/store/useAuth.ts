@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
 import { supabase } from "@/supabase"
+import { ref } from 'vue';
+
 
 export const useAuthStore = defineStore("authStore", {
     state: () => {
@@ -19,13 +21,13 @@ export const useAuthStore = defineStore("authStore", {
                 })
                 this.isLoggedIn = true;
                 this.accessToken = data.session.access_token;
+                this.refreshToken = data?.session?.refresh_token;
                 this.currentUser = data.user;
                 localStorage.setItem("token", this.accessToken);
                 if (error) throw error
             } catch (error) {
                 console.log(error)
                 return { error: error };
-
             }
         },
 
@@ -38,6 +40,7 @@ export const useAuthStore = defineStore("authStore", {
                 if (data) {
                     this.isLoggedIn = true;
                     this.accessToken = data?.session?.access_token;
+                    this.refreshToken = data?.session?.refresh_token;
                     this.currentUser = data.user;
                     localStorage.setItem("token", this.accessToken);
                 }
@@ -45,42 +48,19 @@ export const useAuthStore = defineStore("authStore", {
                 console.log(error)
                 return { error: error };
             }
-        }
-        // async getCurrent() {
-        //     try {
-        //       const localStorageToken = localStorage.getItem("token");
-        //       if (localStorageToken && !this.isLoggedIn) {
-        //         this.isLoggedIn = true;
-        //         this.accessToken = localStorageToken;
-        //         const res = await service.api.authControllerGetClientByToken(
-        //           { token: localStorageToken },
-        //           { format: "json" }
-        //         );
-        //         if (!res) {
-        //           localStorage.removeItem("token");
-        //           window.location.pathname = "/auth/sign-in";
-        //         }
-        //         if (res && res.hasOwnProperty("data")) {
-        //           if (res.data.client !== undefined) {
-        //             delete res.data.client.password;
-        //             this.currentUser = res.data.client;
-        //           } else {
-        //             delete res.data.user.password;
-        //             this.currentUser = res.data.user;
-        //           }
-        //           // update token
-        //           this.accessToken = res.data.token;
-        //           localStorage.setItem("token", res.data.token);
-        //         }
-        //         service.setBaseApiParams({
-        //           headers: {
-        //             Authorization: "Bearer " + this.accessToken,
-        //           },
-        //         });
-        //       }
-        //     } catch (error) {
-        //       console.log(error);
-        //     }
-        // }
+        },
+        
+        async logout() {
+            try {
+                await supabase.auth.signOut()
+                localStorage.removeItem("token");
+                this.currentUser = null;
+                this.accessToken = "";
+                this.refreshToken = "";
+                this.isLoggedIn = false;
+            } catch (error) {
+                console.log(error)
+            }
+        },
     }
 })
