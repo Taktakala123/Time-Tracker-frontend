@@ -17,7 +17,7 @@ onMounted(() => {
 
 const logout = () => {
     Auth.logout();
-    router.push('/auth')
+    router.push({ name: "sign-in" })
 };
 
 onBeforeUnmount(() => {
