@@ -16,44 +16,49 @@ const router = createRouter({
       component: AppLayout,
       children: [
         {
-          path: '/',  
-          meta:{requiresAuth: true},
+          path: '/',
+          meta: { requiresAuth: true },
           name: 'dashboard',
           component: Dashboard
         },
         {
           path: '/timer',
-          meta:{requiresAuth: true},
+          meta: { requiresAuth: true },
           name: 'timer',
           component: Timer
         },
       ]
     },
     {
-      path:'/auth',
-      name:"sign-in",
+      path: '/auth',
+      name: "sign-in",
       component: () =>
-      import(
+        import(
         /* webpackChunkName: "layout" */ '../views/Auth.vue'
-      ),
+        ),
     },
-    
+
   ]
 });
 
 router.beforeEach(async (to, from, next) => {
-    const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-    const authRoute = to.matched.some((record) => record.meta.auth);
-    const store = useAuthStore();
-    const {  isLoggedIn } = storeToRefs(store);
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+  const authRoute = to.matched.some((record) => record.meta.auth);
+  const store = useAuthStore();
+  const { isLoggedIn } = storeToRefs(store);
 
-    if (requiresAuth && !isLoggedIn.value) {
-      next({ name: "sign-in" });
-      return;
-    }
-    
-    next();
+  if (isLoggedIn.value && authRoute && !to.fullPath.includes("type=recovery")) {
+    next({ name: "dashboard" });
     return;
-  });
-  
+  }
+
+  if (requiresAuth && !isLoggedIn.value) {
+    next({ name: "sign-in" });
+    return;
+  }
+
+  next();
+  return;
+});
+
 export default router;
