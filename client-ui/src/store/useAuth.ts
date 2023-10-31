@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import { supabase } from "@/supabase"
 import { ref } from 'vue';
-import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
 
 
 export const useAuthStore = defineStore("authStore", {
