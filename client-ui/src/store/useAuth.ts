@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { supabase } from "@/supabase"
 import { ref } from 'vue';
+import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
 
 
 export const useAuthStore = defineStore("authStore", {
@@ -27,13 +28,12 @@ export const useAuthStore = defineStore("authStore", {
                 if (error) throw error
             } catch (error) {
                 console.log(error)
-                return { error: error };
             }
         },
 
         async signup(email: string, password: string) {
             try {
-                const data = await supabase.auth.signUp({
+                let { data, error } = await supabase.auth.signUp({
                     email,
                     password,
                 })
@@ -44,9 +44,9 @@ export const useAuthStore = defineStore("authStore", {
                     this.currentUser = data.user;
                     localStorage.setItem("token", this.accessToken);
                 }
+                if (error) throw error
             } catch (error) {
                 console.log(error)
-                return { error: error };
             }
         },
         

@@ -30,34 +30,14 @@ const router = createRouter({
       ]
     },
     {
-      path: "/auth",
-      redirect: "/",
+      path:'/auth',
+      name:"sign-in",
       component: () =>
-        import(/* webpackChunkName: "auth_layout" */ "../views/Auth.vue"),
-      children: [
-        {
-          path: "sign-in",
-          name: "sign-in",
-          meta: {
-            auth: true,
-          },
-          component: () =>
-            import(/* webpackChunkName: "sign_in" */ "../components/auth/signIn.vue"),
-        },
-        {
-          path: "sign-up",
-          name: "sign-up",
-          meta: {
-            auth: true,
-          },
-          component: () =>
-            import(
-              /* webpackChunkName: "sign_up" */
-              "../components/auth/signUp.vue"
-            ),
-        },
-      ]
+      import(
+        /* webpackChunkName: "layout" */ '../views/Auth.vue'
+      ),
     },
+    
   ]
 });
 
