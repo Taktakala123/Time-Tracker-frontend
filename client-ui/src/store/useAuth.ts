@@ -27,7 +27,7 @@ export const useAuthStore = defineStore("authStore", {
                 localStorage.setItem("token", this.accessToken);
                 if (error) throw error
             } catch (error) {
-                console.log(error)
+                alert(error.error_description || error.message);
             }
         },
 
@@ -46,7 +46,7 @@ export const useAuthStore = defineStore("authStore", {
                 }
                 if (error) throw error
             } catch (error) {
-                console.log(error)
+                alert(error.error_description || error.message);
             }
         },
         
