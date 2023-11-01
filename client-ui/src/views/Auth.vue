@@ -2,13 +2,13 @@
     <div>
         <sign-up v-if="isSignUp" />
         <sign-in v-else />
-        <button @click="isSignUp = !isSignUp">
+        <Button @click="isSignUp = !isSignUp">
             {{
                 isSignUp
                 ? "Already have an account? Sign In"
                 : "Don't have an account yet? Sign Up"
             }}
-        </button>
+        </Button>
     </div>
 </template>
   

@@ -9,6 +9,14 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     {
+      path: '/auth',
+      meta: {
+        auth: true,
+      },
+      name: "auth",
+      component: () =>import('../views/Auth.vue'),
+    },
+    {
       path: '/',
       meta: {
         requiresAuth: true,
@@ -29,15 +37,7 @@ const router = createRouter({
         },
       ]
     },
-    {
-      path: '/auth',
-      name: "sign-in",
-      component: () =>
-        import(
-        /* webpackChunkName: "layout" */ '../views/Auth.vue'
-        ),
-    },
-
+    
   ]
 });
 
@@ -45,15 +45,16 @@ router.beforeEach(async (to, from, next) => {
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
   const authRoute = to.matched.some((record) => record.meta.auth);
   const store = useAuthStore();
-  const { isLoggedIn } = storeToRefs(store);
+  const isLoggedIn = store.isLoggedIn
+ 
 
-  if (isLoggedIn.value && authRoute && !to.fullPath.includes("type=recovery")) {
+  if (isLoggedIn && authRoute  ) {
     next({ name: "dashboard" });
     return;
   }
 
-  if (requiresAuth && !isLoggedIn.value) {
-    next({ name: "sign-in" });
+  if (requiresAuth && !isLoggedIn) {
+    next({ name: "auth"});
     return;
   }
 

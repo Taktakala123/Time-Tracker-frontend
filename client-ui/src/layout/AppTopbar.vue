@@ -1,4 +1,4 @@
-<script setup>
+<script setup >
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useLayout } from '../layout/composables/layout';
 import { useRouter } from 'vue-router';
@@ -15,10 +15,18 @@ onMounted(() => {
     bindOutsideClickListener();
 });
 
-const logout = () => {
-    Auth.logout();
-    router.push({ name: "sign-in" })
-};
+const logout = async () => {
+    try {
+        await Auth.logout();
+        router.push({name:"auth"})
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+// const goProfile = () => {
+//     router.push({ name:"profile" })
+// };
 
 onBeforeUnmount(() => {
     unbindOutsideClickListener();
@@ -84,7 +92,7 @@ const isOutsideClicked = (event) => {
                 <i class="pi pi-calendar"></i>
                 <span>Calendar</span>
             </button>
-            <button @click="onTopBarMenuButton()" class="p-link layout-topbar-button">
+            <button @click="goProfile()" class="p-link layout-topbar-button">
                 <i class="pi pi-user"></i>
                 <span>Profile</span>
             </button>
