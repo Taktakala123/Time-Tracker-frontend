@@ -18,11 +18,13 @@ export const useAuthStore = defineStore("authStore", {
                     email: email,
                     password: password,
                 })
-                this.isLoggedIn = true;
-                this.accessToken = data.session.access_token;
-                this.refreshToken = data?.session?.refresh_token;
-                this.currentUser = data.user;
-                localStorage.setItem("token", this.accessToken);
+                if (data && !error  ) {
+                    this.isLoggedIn = true;
+                    this.accessToken = data.session.access_token;
+                    this.refreshToken = data?.session?.refresh_token;
+                    this.currentUser = data.user;
+                    localStorage.setItem("token", this.accessToken);
+                }
                 if (error) throw error
             } catch (error) {
                 alert(error);
@@ -35,7 +37,7 @@ export const useAuthStore = defineStore("authStore", {
                     email,
                     password,
                 })
-                if (data) {
+                if (data && !error ) {
                     this.isLoggedIn = true;
                     this.accessToken = data?.session?.access_token;
                     this.refreshToken = data?.session?.refresh_token;
@@ -63,7 +65,6 @@ export const useAuthStore = defineStore("authStore", {
             try {
                 const localStorageToken = localStorage.getItem("token");
                 const localUser = await supabase.auth.getSession();
-                console.log(localUser)
                 if (localStorageToken && !this.isLoggedIn) {
                     this.refreshToken = localUser?.data?.session?.refresh_token;
                     this.currentUser = localUser?.data?.session?.user;
