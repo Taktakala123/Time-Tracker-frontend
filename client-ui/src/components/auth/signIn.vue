@@ -1,5 +1,8 @@
 <template>
     <form @submit.prevent="signIn" class="card flex justify-content-center">
+        <div>
+            <img src="/public/tekabdev.png" >
+        </div>
         <div class="flex flex-column gap-2 mt-5">
             <label for="Email">Email</label>
             <InputText id="Email" class="inputField" required type="email" v-model="email" />
@@ -25,7 +28,7 @@ const Auth = useAuthStore();
 const signIn = async () => {
     try {
         await Auth.signIn(email.value, password.value)
-        router.push({name:"dashboard"})
+        router.push({ name: "dashboard" })
 
     } catch (error) {
         console.log(error)

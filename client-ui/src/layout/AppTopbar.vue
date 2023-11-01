@@ -75,6 +75,7 @@ const isOutsideClicked = (event) => {
 <template>
     <div class="layout-topbar">
         <router-link to="/" class="layout-topbar-logo">
+            <img src="/public/tekabdev.png" alt="Logo" height="20" class="mr-4" />
             <span>TekabDev</span>
         </router-link>
 

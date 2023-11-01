@@ -1,5 +1,8 @@
 <template>
     <form @submit.prevent="signup" class="card flex justify-content-center">
+        <div>
+            <img src="/public/tekabdev.png" >
+        </div>
         <div class="flex flex-column gap-2 mt-5">
             <label for="Email">Email</label>
             <InputText id="Email" class="inputField" required type="email" v-model="email" />
