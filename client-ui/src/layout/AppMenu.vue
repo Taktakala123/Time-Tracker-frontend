@@ -11,7 +11,7 @@ const model = ref([
     {
         label: 'Pages',
         items: [
-        { label: 'Timer', icon: 'pi pi-fw pi-home', to: '/timer' }
+        { label: 'Track', icon: 'pi pi-fw pi-stopwatch', to: '/timer' }
         ]
     },
    
