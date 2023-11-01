@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import { supabase } from "@/supabase"
-import { ref } from 'vue';
 
 
 export const useAuthStore = defineStore("authStore", {
@@ -26,7 +25,7 @@ export const useAuthStore = defineStore("authStore", {
                 localStorage.setItem("token", this.accessToken);
                 if (error) throw error
             } catch (error) {
-                alert(error.error_description || error.message);
+                alert(error);
             }
         },
 
@@ -45,10 +44,9 @@ export const useAuthStore = defineStore("authStore", {
                 }
                 if (error) throw error
             } catch (error) {
-                alert(error.error_description || error.message);
+                alert(error);
             }
         },
-        
         async logout() {
             try {
                 await supabase.auth.signOut()
@@ -59,6 +57,21 @@ export const useAuthStore = defineStore("authStore", {
                 this.isLoggedIn = false;
             } catch (error) {
                 console.log(error)
+            }
+        },
+        async getCurrent() {
+            try {
+                const localStorageToken = localStorage.getItem("token");
+                const localUser = await supabase.auth.getSession();
+                console.log(localUser)
+                if (localStorageToken && !this.isLoggedIn) {
+                    this.refreshToken = localUser?.data?.session?.refresh_token;
+                    this.currentUser = localUser?.data?.session?.user;
+                    this.isLoggedIn = true;
+                    this.accessToken = localStorageToken;
+                }
+            } catch (error) {
+                console.log(error);
             }
         },
     }

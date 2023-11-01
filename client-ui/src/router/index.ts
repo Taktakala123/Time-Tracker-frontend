@@ -45,19 +45,19 @@ router.beforeEach(async (to, from, next) => {
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
   const authRoute = to.matched.some((record) => record.meta.auth);
   const store = useAuthStore();
-  const isLoggedIn = store.isLoggedIn
- 
 
-  if (isLoggedIn && authRoute  ) {
+  const { currentUser, isLoggedIn } = storeToRefs(useAuthStore());
+  currentUser.value ? null : await store.getCurrent();
+
+  if (isLoggedIn.value && authRoute && !to.fullPath.includes("type=recovery")) {
     next({ name: "dashboard" });
     return;
   }
 
-  if (requiresAuth && !isLoggedIn) {
-    next({ name: "auth"});
+  if (requiresAuth && !isLoggedIn.value) {
+    next({ name: "auth" });
     return;
   }
-
   next();
   return;
 });
