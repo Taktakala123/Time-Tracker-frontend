@@ -18,7 +18,7 @@ onMounted(() => {
 const logout = async () => {
     try {
         await Auth.logout();
-        router.push({name:"auth"})
+        router.push({name:"signin"})
 
     } catch (error) {
         console.log(error)

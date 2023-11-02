@@ -9,6 +9,8 @@ export const useAuthStore = defineStore("authStore", {
             accessToken: "" as string,
             refreshToken: "" as string,
             isLoggedIn: null as null | boolean,
+            errors: "" as string,
+            
         };
     },
     actions: {
@@ -25,9 +27,9 @@ export const useAuthStore = defineStore("authStore", {
                     this.currentUser = data.user;
                     localStorage.setItem("token", this.accessToken);
                 }
-                if (error) throw error
+                if (error) this.errors = error
             } catch (error) {
-                alert(error);
+                console.log(error);
             }
         },
 
@@ -44,9 +46,9 @@ export const useAuthStore = defineStore("authStore", {
                     this.currentUser = data.user;
                     localStorage.setItem("token", this.accessToken);
                 }
-                if (error) throw error
+                if (error) this.errors = error
             } catch (error) {
-                alert(error);
+                console.log(error);
             }
         },
         async logout() {

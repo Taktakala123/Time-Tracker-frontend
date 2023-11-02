@@ -10,11 +10,32 @@ const router = createRouter({
   routes: [
     {
       path: '/auth',
+      redirect: "/",
       meta: {
         auth: true,
       },
       name: "auth",
       component: () =>import('../views/Auth.vue'),
+      children:[
+        {
+          path: "signin",
+          name: "signin",
+          meta: {
+            auth: true,
+          },
+          component: () =>
+            import(/* webpackChunkName: "sign_in" */ "../components/auth/signIn.vue"),
+        },
+        {
+          path: "signup",
+          name: "signup",
+          meta: {
+            auth: true,
+          },
+          component: () =>
+            import(  /* webpackChunkName: "sign_up" */ "../components/auth/signUp.vue"),
+        },
+      ]
     },
     {
       path: '/',
@@ -55,7 +76,7 @@ router.beforeEach(async (to, from, next) => {
   }
 
   if (requiresAuth && !isLoggedIn.value) {
-    next({ name: "auth" });
+    next({ name: "signin" });
     return;
   }
   next();
