@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { supabase } from "@/supabase"
+import { useToast } from "primevue/usetoast";
 
 
 export const useAuthStore = defineStore("authStore", {
@@ -10,7 +11,7 @@ export const useAuthStore = defineStore("authStore", {
             refreshToken: "" as string,
             isLoggedIn: null as null | boolean,
             errors: "" as string,
-            
+
         };
     },
     actions: {
@@ -20,7 +21,7 @@ export const useAuthStore = defineStore("authStore", {
                     email: email,
                     password: password,
                 })
-                if (data && !error  ) {
+                if (data && !error) {
                     this.isLoggedIn = true;
                     this.accessToken = data.session.access_token;
                     this.refreshToken = data?.session?.refresh_token;
@@ -39,7 +40,7 @@ export const useAuthStore = defineStore("authStore", {
                     email,
                     password,
                 })
-                if (data && !error ) {
+                if (data && !error) {
                     this.isLoggedIn = true;
                     this.accessToken = data?.session?.access_token;
                     this.refreshToken = data?.session?.refresh_token;

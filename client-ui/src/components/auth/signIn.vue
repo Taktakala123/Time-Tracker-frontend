@@ -34,12 +34,13 @@ const signIn = async () => {
     try {
         await Auth.signIn(email.value, password.value);
         if (Auth.errors) {
-            toast.add({ severity: 'error', summary: 'Error Message', detail: ' Login failed', life: 3000 });
+            await toast.add({ severity: 'error', summary: 'Error Message', detail: ' Login failed', life: 3000 });
+            Auth.errors = ""; 
             return;
         }
         else {
-        await toast.add({ severity: 'success', summary: 'Success Message', detail: 'Successful Login', life: 3000 });
-        await router.push({ name: "dashboard" });
+            await toast.add({ severity: 'success', summary: 'Success Message', detail: 'Successful Login', life: 3000 });
+            await router.push({ name: "dashboard" });
         }
     } catch (error) {
         console.log(error);
